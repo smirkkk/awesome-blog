@@ -6,7 +6,7 @@
     <!-- v-if="$vuetify.breakpoint.name != 'xs' && $vuetify.breakpoint.name != 'sm'" -->
     <v-container id="title-container" class="col-10 col-md-6">
       <p class="ma-0" style="font-size:24px;">Here is..</p>
-      <p class="ma-0" style="font-size: 36px;">Coding Whale's Storage</p>
+      <p class="ma-0" style="font-size: 36px;">Coding Whale's Awesome Archive</p>
     </v-container>
     <v-container id="search-container" class="col-10 col-md-6">
       <input
@@ -108,7 +108,7 @@
           <p
             class="ma-0"
             style="font-size: 28px; color: white; position:relative; font-weight:100;"
-          >Stat</p>
+          >Stats</p>
         </v-col>
         <v-col cols="12"></v-col>
         <v-col class="col-12 col-md-6">
