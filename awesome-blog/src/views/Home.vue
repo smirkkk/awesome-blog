@@ -27,9 +27,7 @@
       <v-btn class="mr-5" icon color="white">
         <v-icon large>mdi-feature-search-outline</v-icon>
       </v-btn>
-      <v-btn icon>
-        🇰🇷
-      </v-btn>
+      <v-btn icon>🇰🇷</v-btn>
       <v-row>
         <v-col cols="12" class="pt-l10 pb-0">
           <p
@@ -42,15 +40,9 @@
       <div class="text-center" v-if="recentPostLoading">
         <v-progress-circular :width="3" class="mt-10" indeterminate justify="center" color="white"></v-progress-circular>
       </div>
-      <v-row justify="center" v-else-if="recentPost">
-        <v-col class="col-12 col-md-4">
-          <PostCard />
-        </v-col>
-        <v-col class="col-12 col-md-4">
-          <PostCard />
-        </v-col>
-        <v-col class="col-12 col-md-4">
-          <PostCard />
+      <v-row justify="start" v-else-if="recentPost && recentPost.length > 0">
+        <v-col v-for="post in recentPost" :key="'post-' + post.permalink" class="col-12 col-md-4">
+          <PostCard :post="post" />
         </v-col>
       </v-row>
       <p v-else class="no-data-text-white mt-5" style="position:relative;">No Data</p>
@@ -70,19 +62,19 @@
           <v-icon color="white">mdi-file-code</v-icon>
           <span>Dev</span>
         </v-col>
-        <v-col cols="12" class="category-inner">
+        <v-col cols="12" class="category-inner" @click="$router.push('/category/python/posts')">
           <v-icon color="white">mdi-language-python</v-icon>
           <span>python</span>
         </v-col>
-        <v-col cols="12" class="category-inner">
+        <v-col cols="12" class="category-inner" @click="$router.push('/category/backend/posts')">
           <v-icon color="white">mdi-server</v-icon>
           <span>server / backend</span>
         </v-col>
-        <v-col cols="12" class="category-inner">
+        <v-col cols="12" class="category-inner" @click="$router.push('/category/data/posts')">
           <v-icon color="white">mdi-chart-donut</v-icon>
           <span>data analytics</span>
         </v-col>
-        <v-col cols="12" class="category-inner">
+        <v-col cols="12" class="category-inner" @click="$router.push('/category/etc/posts')">
           <v-icon color="white">mdi-dots-horizontal</v-icon>
           <span>etc</span>
         </v-col>
@@ -91,11 +83,15 @@
           <v-icon color="white">mdi-human-greeting</v-icon>
           <span>Human Being</span>
         </v-col>
-        <v-col cols="12" class="category-inner">
+        <v-col
+          cols="12"
+          class="category-inner"
+          @click="$router.push('/category/afterreports/posts')"
+        >
           <v-icon color="white">mdi-book-open-page-variant</v-icon>
           <span>after reports</span>
         </v-col>
-        <v-col cols="12" class="category-inner">
+        <v-col cols="12" class="category-inner" @click="$router.push('/category/interested/posts')">
           <v-icon color="white">mdi-head-heart-outline</v-icon>
           <span>interested things</span>
         </v-col>
@@ -143,7 +139,7 @@
                 <span class="communication-title">Go to subscribe</span>
               </v-col>
               <v-col cols="5">
-                <p class="communication-count">100</p>
+                <p class="communication-count">{{subscriberTotal}}</p>
               </v-col>
               <v-col cols="7">
                 <v-btn color="white" icon style="float:right;" @click="$router.push('/subscribe')">
@@ -161,6 +157,17 @@
       </v-row>
     </v-container>
 
+    <v-container class="col-10 col-md-6">
+      <v-row>
+        <v-col cols="12" class="pt-10 pb-0">
+          <p
+            class="ma-0"
+            style="font-size: 28px; color: white; position:relative; font-weight:100;"
+          >Guest Book</p>
+        </v-col>
+      </v-row>
+    </v-container>
+
     <v-container style="height: 10vh;"></v-container>
   </div>
 </template>
@@ -173,7 +180,8 @@ export default {
     return {
       keyword: undefined,
       recentPost: [],
-      recentPostLoading: false,
+      recentPostLoading: true,
+      subscriberTotal: undefined,
     };
   },
   components: {
@@ -182,11 +190,24 @@ export default {
   methods: {
     search() {
       if (this.keyword) {
-        alert(this.keyword);
+        this.$router.push("/search/posts?q=" + this.keyword);
       }
+    },
+    getRecentPost() {
+      this.$http.get("/posts/recent").then((result) => {
+        this.recentPost = result.data;
+        this.recentPostLoading = false;
+      });
+    },
+    getSubscriberCount() {
+      this.$http.get("/manage/subscribers/total").then((result) => {
+        this.subscriberTotal = result.data.count;
+      });
     },
   },
   mounted() {
+    this.getRecentPost();
+    this.getSubscriberCount();
     console.log(this.$vuetify.breakpoint);
   },
 };
@@ -256,6 +277,10 @@ export default {
 
 #category-list .category-inner {
   padding-left: 36px;
+}
+
+#category-list .category-inner:hover {
+  cursor: pointer;
 }
 
 .communication-container {

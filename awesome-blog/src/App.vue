@@ -3,7 +3,7 @@
     <v-app-bar
     v-if="appBar"
       app
-      color="primary"
+      color="white"
       dark
     >
       <div class="d-flex align-center">
@@ -13,11 +13,14 @@
           contain
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
-          width="40"
+          width="32"
           @click="$router.push('/')"
         />
+        <v-spacer></v-spacer>
+        <v-btn @click="sideDrawer = !sideDrawer"></v-btn>
       </div>
     </v-app-bar>
+    <!-- <SideDrawer :drawer="sideDrawer" /> -->
 
     <v-main>
       <router-view :key="Date.now().toString()" />
@@ -27,14 +30,16 @@
 </template>
 
 <script>
+import SideDrawer from "@/components/SideDrawer"
+
 export default {
   name: 'App',
-
   components: {
+    SideDrawer
   },
   computed:{
     appBar(){
-      if(this.disallowedPath.includes(this.$route.path)){
+      if(this.disallowedPath.includes(this.$route.name)){
         return false;
       } else {
         return true;
@@ -44,13 +49,16 @@ export default {
   data(){
     return {
       disallowedPath: [
-        '/',
-        '/subscribe'
-      ]
+        'Home',
+        'Subscribe',
+        'PostsForCategory',
+        'SearchPost'
+      ],
+      sideDrawer: false
     }
   },
   mounted(){
-    console.log(this.$route.path);
+    console.log(this.$route);
   }
 };
 </script>
