@@ -103,7 +103,7 @@ export default {
   watch:{
     tag(tag){
       if(tag !== undefined){
-        this.comment += '@' + tag;
+        this.comment += '@' + tag + ' ';
         this.$emit('tag');
       }
     }

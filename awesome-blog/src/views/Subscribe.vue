@@ -96,25 +96,29 @@ export default {
           who: "user",
           text: this.email,
         });
-        await this.$http.post('/manage/subscribe', {email: this.email}).then(
-          result=> {
-            if(!result.data.already){
+        await this.$http
+          .post("/manage/subscribe", { email: this.email })
+          .then((result) => {
+            if (!result.data.valid) {
               this.conversations.push({
                 who: "admin",
-                text: result.data.email + ' is already subscribed me!',
-              });   
+                text: result.data.email + " is not a valid email!",
+              });
+            } else if (!result.data.already) {
+              this.conversations.push({
+                who: "admin",
+                text: result.data.email + " has already subscribed me!",
+              });
             } else {
               this.conversations.push({
                 who: "admin",
-                text: result.data.email + ' subscribed successfully!',
-              });   
+                text: result.data.email + " subscribed successfully!",
+              });
             }
-          }
-        );
+          });
         var objDiv = document.getElementById("conversation-container");
         objDiv.scrollTop = objDiv.scrollHeight;
-        console.log(objDiv)
-        this.email = '';
+        this.email = "";
       }
     },
   },

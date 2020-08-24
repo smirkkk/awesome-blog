@@ -5,17 +5,19 @@
       app
       color="white"
       dark
+      height="80px"
     >
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          src="@/assets/logo.png"
           transition="scale-transition"
-          width="32"
+          width="60px"
           @click="$router.push('/')"
         />
+        <p class="ma-0 mr-10" style="color: black;">C  W  A  A</p>
         <v-spacer></v-spacer>
         <v-btn @click="sideDrawer = !sideDrawer"></v-btn>
       </div>

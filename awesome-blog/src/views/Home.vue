@@ -27,7 +27,6 @@
       <v-btn class="mr-5" icon color="white">
         <v-icon large>mdi-feature-search-outline</v-icon>
       </v-btn>
-      <v-btn icon>🇰🇷</v-btn>
       <v-row>
         <v-col cols="12" class="pt-l10 pb-0">
           <p
@@ -58,7 +57,7 @@
         <v-col cols="12"></v-col>
       </v-row>
       <v-row id="category-list">
-        <v-col cols="12">
+        <v-col cols="12" class="category-outer" @click="$router.push('/category/dev/posts')">
           <v-icon color="white">mdi-file-code</v-icon>
           <span>Dev</span>
         </v-col>
@@ -79,7 +78,7 @@
           <span>etc</span>
         </v-col>
         <v-col cols="12"></v-col>
-        <v-col cols="12">
+        <v-col cols="12" class="category-outer" @click="$router.push('/category/human being/posts')">
           <v-icon color="white">mdi-human-greeting</v-icon>
           <span>Human Being</span>
         </v-col>
@@ -119,10 +118,10 @@
                 <span class="communication-title">Total</span>
               </v-col>
               <v-col cols="6">
-                <p class="communication-count">10</p>
+                <p class="communication-count">{{todayVisitor}}</p>
               </v-col>
               <v-col cols="6">
-                <p class="communication-count">10,000</p>
+                <p class="communication-count">{{totalVisitor}}</p>
               </v-col>
             </v-row>
           </v-container>
@@ -182,6 +181,8 @@ export default {
       recentPost: [],
       recentPostLoading: true,
       subscriberTotal: undefined,
+      todayVisitor: undefined,
+      totalVisitor: undefined
     };
   },
   components: {
@@ -204,11 +205,17 @@ export default {
         this.subscriberTotal = result.data.count;
       });
     },
+    getVisitorCount(){
+      this.$http.get("/manage/visitor").then((result) => {
+        this.totalVisitor = result.data.total;
+        this.todayVisitor = result.data.today;
+      });
+    }
   },
   mounted() {
     this.getRecentPost();
     this.getSubscriberCount();
-    console.log(this.$vuetify.breakpoint);
+    this.getVisitorCount();
   },
 };
 </script>
@@ -279,7 +286,8 @@ export default {
   padding-left: 36px;
 }
 
-#category-list .category-inner:hover {
+#category-list .category-inner:hover,
+#category-list .category-outer:hover {
   cursor: pointer;
 }
 

@@ -7,6 +7,8 @@
     <v-container>
       <p>제목</p>
       <v-text-field v-model="title"></v-text-field>
+      <p>미리보기</p>
+      <v-text-field v-model="previewText"></v-text-field>
       <p>permalink</p>
       <v-text-field v-model="permalink"></v-text-field>
               <v-select
@@ -32,6 +34,7 @@ export default {
     return {
       title: undefined,
       permalink: undefined,
+      previewText: undefined,
       category: undefined,
       categoryList: undefined,
       text: "",
@@ -73,8 +76,9 @@ export default {
       this.$http.post('/posts/publish', {
         title: this.title,
         text: this.text,
-        permalink: this.permalLink,
-        category: this.category
+        permalink: this.permalink,
+        category: this.category,
+        preview: this.previewText
       }).then(
             result => {
                 this.$router.push('/post/' + this.permalink)

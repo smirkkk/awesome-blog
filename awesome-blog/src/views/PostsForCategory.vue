@@ -4,7 +4,7 @@
     <div id="img-opacity"></div>
     <v-container style="height: 10vh;"></v-container>
     <v-container class="col-10 col-md-6" style="position:relative">
-      <p id="posts-title">Posts in category : {{category}}</p>
+      <p id="posts-title">Posts in category : {{categoryTitle}}</p>
       <p id="posts-count" v-if="postTotalCount == 0">There isn't any post.</p>
       <p id="posts-count" v-if="postTotalCount == 1">There is only 1 post.</p>
       <p id="posts-count" v-if="postTotalCount > 1">There are {{postTotalCount}} posts.</p>
@@ -28,6 +28,7 @@ export default {
       postList: undefined,
       isPostLoading: true,
       postTotalCount: undefined,
+      categoryTitle: undefined
     };
   },
   components: {
@@ -38,6 +39,7 @@ export default {
       this.$http
         .get("/posts/categories/" + this.category + "/valid")
         .then((result) => {
+          this.categoryTitle = result.data.title;
           if (result.data.valid === false) {
             alert("invalid");
           } else {

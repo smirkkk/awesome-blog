@@ -8,6 +8,8 @@ import Publish from '@/views/Publish.vue'
 import PostsForCategory from '@/views/PostsForCategory.vue'
 import SearchPost from '@/views/SearchPost.vue'
 
+import axios from 'axios';
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -66,5 +68,11 @@ const router = new VueRouter({
   routes,
   mode: 'history'
 })
+
+router.beforeEach(async (to, from, next) => {
+  axios.post('/manage/visitor');
+  next();
+});
+
 
 export default router

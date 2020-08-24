@@ -2,7 +2,7 @@
   <v-container class="pa-0">
     <div v-if="!$vuetify.breakpoint.mobile" style="width: 100%; height: 5vh;"></div>  
     <v-container id="post-title-container" class="pa-2 pa-md-12 col-12 col-md-8" v-if="post">
-      <p class="mb-0" id="post-category">{{post.category}}</p>
+      <p class="mb-0" id="post-category" @click="$router.push('/category/' + post.category + '/posts')">{{post.category}}</p>
       <p class="mb-0" id="post-title">{{post.title}}</p>
       <p id="post-published-at">{{post.published_at}}</p>
       <v-divider></v-divider>
@@ -14,7 +14,7 @@
       <CommentList @push="newComment=undefined" :newComment="newComment" @tag="tagUser" />
       <CommentWrite @write="write" :tag="tag" @tag="tag=undefined;" />
     </v-container>
-    <img src="@/assets/logo_outlined.png" />
+    <!-- <img src="@/assets/logo_outlined.png" /> -->
     <div style="width: 100%; height: 10vh;"></div>
   </v-container>
 </template>
@@ -85,6 +85,10 @@ export default {
 #post-category {
   color: gray;
   text-align: center;
+}
+
+#post-category:hover {
+  cursor: pointer;
 }
 
 #post-title-container, 
