@@ -156,7 +156,7 @@
       </v-row>
     </v-container>
 
-    <v-container class="col-10 col-md-6">
+    <!-- <v-container class="col-10 col-md-6">
       <v-row>
         <v-col cols="12" class="pt-10 pb-0">
           <p
@@ -165,7 +165,7 @@
           >Guest Book</p>
         </v-col>
       </v-row>
-    </v-container>
+    </v-container> -->
 
     <v-container style="height: 10vh;"></v-container>
   </div>
