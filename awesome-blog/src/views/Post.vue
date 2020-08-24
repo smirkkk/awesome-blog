@@ -1,13 +1,13 @@
 <template>
   <v-container class="pa-0">
     <div v-if="!$vuetify.breakpoint.mobile" style="width: 100%; height: 5vh;"></div>  
-    <v-container id="post-title-container" class="pa-2 pa-md-12 col-12 col-md-8" v-if="post">
+    <v-container id="post-title-container" class="pa-4 pa-md-12 col-12 col-md-8" v-if="post">
       <p class="mb-0" id="post-category" @click="$router.push('/category/' + post.category + '/posts')">{{post.category}}</p>
       <p class="mb-0" id="post-title">{{post.title}}</p>
-      <p id="post-published-at">{{post.published_at}}</p>
+      <p id="post-published-at"> <v-icon small>mdi-pencil</v-icon> {{post.published_at}} | <v-icon small>mdi-eye</v-icon>{{post.hit}}</p>
       <v-divider></v-divider>
     </v-container>
-    <v-container id="post-container" class="pa-2 pa-md-12 col-12 col-md-8" v-if="post">
+    <v-container id="post-container" class="pa-6 pa-md-12 col-12 col-md-8" v-if="post">
       <p v-html="markdownText"></p>
     </v-container>
     <v-container id="comment-container" class="col-12 col-md-8 pl-0 pr-0">
@@ -98,5 +98,9 @@ export default {
 
 #post-container >>> img {
   max-width: 100%;
+}
+
+#post-container >>> p {
+  word-break: keep-all;
 }
 </style>
