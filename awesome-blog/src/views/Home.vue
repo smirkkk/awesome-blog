@@ -18,33 +18,47 @@
       <v-icon id="search-button" v-if="keyword" @click="search" color="white">mdi-magnify</v-icon>
     </v-container>
     <v-container id="button-container" class="col-10 col-md-6">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <a
+            class="mr-4"
+            target="_blank"
+            href="https://github.com/smirkkk"
+            style="text-decoration: none;"
+          >
+            <v-icon v-bind="attrs" v-on="on" large color="white">mdi-github</v-icon>
+          </a>
+        </template>
+        <span>Go To Github</span>
+      </v-tooltip>
 
       <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <a class="mr-4" target="_blank" href="https://github.com/smirkkk" style="text-decoration: none;">
-              <v-icon v-bind="attrs" v-on="on" large color="white">mdi-github</v-icon>
-            </a>
-          </template>
-          <span>Go To Github</span>
-        </v-tooltip>
+        <template v-slot:activator="{ on, attrs }">
+          <a
+            class="mr-4"
+            target="_blank"
+            href="mailto:444.gkk@gmail.com"
+            style="text-decoration: none;"
+          >
+            <v-icon v-bind="attrs" v-on="on" large color="white">mdi-email</v-icon>
+          </a>
+        </template>
+        <span>Send Mail (444.gkk@gmail.com)</span>
+      </v-tooltip>
 
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <a class="mr-4" target="_blank" href="mailto:444.gkk@gmail.com" style="text-decoration: none;">
-              <v-icon v-bind="attrs" v-on="on" large color="white">mdi-email</v-icon>
-            </a>
-          </template>
-          <span>Send Mail (444.gkk@gmail.com)</span>
-        </v-tooltip>
-
-                <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <a class="mr-4" target="_blank" href="http://intro.orcinus.kr" style="text-decoration: none;">
-              <v-icon v-bind="attrs" v-on="on" large color="white">mdi-feature-search-outline</v-icon>
-            </a>
-          </template>
-          <span>About me and my portfolio</span>
-        </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <a
+            class="mr-4"
+            target="_blank"
+            href="http://intro.orcinus.kr"
+            style="text-decoration: none;"
+          >
+            <v-icon v-bind="attrs" v-on="on" large color="white">mdi-feature-search-outline</v-icon>
+          </a>
+        </template>
+        <span>About me and my portfolio</span>
+      </v-tooltip>
 
       <v-row>
         <v-col cols="12" class="pt-l10 pb-0">
@@ -97,7 +111,11 @@
           <span>etc</span>
         </v-col>
         <v-col cols="12"></v-col>
-        <v-col cols="12" class="category-outer" @click="$router.push('/category/human being/posts')">
+        <v-col
+          cols="12"
+          class="category-outer"
+          @click="$router.push('/category/human being/posts')"
+        >
           <v-icon color="white">mdi-human-greeting</v-icon>
           <span>Human Being</span>
         </v-col>
@@ -173,6 +191,15 @@
           </v-container>
         </v-col>
       </v-row>
+
+      <v-alert
+        color="#2A3B4D"
+        dark
+        icon="mdi-clock-fast"
+        border="left"
+        style="position:fixed; z-index: 99999; bottom: 20px; min-width: 50%; max-width: 80%;"
+        dismissible
+      >이전 블로그의 게시글을 보고 싶다면 <a href="http://orcinus.kr" target="_blank" style="color: white;">여기</a>를 클릭하십시오.</v-alert>
     </v-container>
 
     <!-- <v-container class="col-10 col-md-6">
@@ -184,7 +211,7 @@
           >Guest Book</p>
         </v-col>
       </v-row>
-    </v-container> -->
+    </v-container>-->
 
     <v-container style="height: 10vh;"></v-container>
   </div>
@@ -201,7 +228,7 @@ export default {
       recentPostLoading: true,
       subscriberTotal: undefined,
       todayVisitor: undefined,
-      totalVisitor: undefined
+      totalVisitor: undefined,
     };
   },
   components: {
@@ -224,12 +251,12 @@ export default {
         this.subscriberTotal = result.data.count;
       });
     },
-    getVisitorCount(){
+    getVisitorCount() {
       this.$http.get("/manage/visitor").then((result) => {
         this.totalVisitor = result.data.total;
         this.todayVisitor = result.data.today;
       });
-    }
+    },
   },
   mounted() {
     this.getRecentPost();
